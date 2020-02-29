@@ -1,0 +1,17 @@
+package cn.xiaojf.rules
+
+import org.itstack.demo.model.Car;
+
+rule "car-discount>30"
+when
+    $car : Car(person.age > 30)
+    then
+        $car.setDiscount(80);
+    end
+
+rule "car-discount<=30"
+when
+    $car : Car(person.age <= 30)
+    then
+        $car.setDiscount(90);
+    end
