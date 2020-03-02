@@ -1,7 +1,8 @@
 package org.itstack.demo.test;
 
-import org.itstack.demo.model.Car;
-import org.itstack.demo.model.Person;
+import org.itstack.demo.model.User;
+import org.itstack.demo.service.UserService;
+import org.junit.Before;
 import org.junit.Test;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
@@ -14,25 +15,29 @@ import org.kie.api.runtime.KieSession;
  */
 public class ApiTest {
 
-    @Test
-    public void test() {
+    private KieContainer kieContainer;
+
+    @Before
+    public void init() {
         KieServices kieServices = KieServices.Factory.get();
-        //默认自动加载 META-INF/kmodule.xml
-        KieContainer kieContainer = kieServices.getKieClasspathContainer();
-        //kmodule.xml 中定义的 ksession name
+        kieContainer = kieServices.getKieClasspathContainer();
+    }
+
+    @Test
+    public void doRun() {
         KieSession kieSession = kieContainer.newKieSession("all-rules");
 
-        Person p1 = new Person();
-        p1.setAge(20);
-        Car car = new Car();
-        car.setPerson(p1);
+        User user = new User();
+        user.setSex("男");
+        user.setAge(30);
 
-        kieSession.insert(car);
-
+        kieSession.insert(user);
+        UserService userService = new UserService();
+        kieSession.setGlobal("userService", userService);
         int count = kieSession.fireAllRules();
 
-        System.out.println(count);
-        System.out.println(car.getDiscount());
+        System.out.println("Fire rule(s)：" + count);
+        System.out.println("Fire result：" + userService.result());
 
         kieSession.dispose();
     }

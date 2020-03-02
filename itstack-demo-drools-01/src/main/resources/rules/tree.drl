@@ -1,0 +1,34 @@
+package rules;
+
+import org.itstack.demo.model.User;
+
+global org.itstack.demo.service.UserService userService
+
+rule "tree-A"
+when
+    User(sex == "女", age < 18)
+    then
+    userService.result("未满18岁的女孩子不可结婚");
+    end
+
+rule "tree-B"
+when
+    User(sex == "女", age >= 18)
+    then
+    userService.result("已满18岁以上的女孩子可以结婚");
+    end
+
+rule "tree-C"
+when
+    User(sex == "男", age < 22)
+    then
+    userService.result("未满22岁的男孩子可不结婚");
+    end
+
+rule "tree-D"
+when
+    User(sex == "男", age >= 22)
+    then
+    userService.result("已满22岁以上的男孩子可以结婚");
+    end
+
