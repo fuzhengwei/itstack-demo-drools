@@ -1,0 +1,90 @@
+package rules;
+
+import org.itstack.demo.model.Policy
+import org.itstack.demo.Result;
+
+global org.itstack.demo.Result res;
+
+rule "红A"
+when
+    Policy(sex == "男", age < 18, userSingle)
+    then
+    res.setResult("A","红色A");
+    end
+
+rule "红B"
+when
+    Policy(sex == "男", age < 18, !userSingle)
+    then
+    res.setResult("B","红色B");
+    end
+
+rule "红C"
+when
+    Policy(sex == "男", age >= 18, age <= 30, userMarry)
+    then
+    res.setResult("C","红色C");
+    end
+
+rule "红D"
+when
+    Policy(sex == "男", age >= 18, age <= 30, !userMarry)
+    then
+    res.setResult("D","红色D");
+    end
+
+rule "红E"
+when
+    Policy(sex == "男", age > 30, userParenting)
+    then
+    res.setResult("E","红色E");
+    end
+
+rule "红F"
+when
+    Policy(sex == "男", age > 30, !userParenting)
+    then
+    res.setResult("F","红色F");
+    end
+
+rule "黄A"
+when
+    Policy(sex == "女", age < 18, userSingle)
+    then
+    res.setResult("A","黄色A");
+    end
+
+rule "黄B"
+when
+    Policy(sex == "女", age < 18, !userSingle)
+    then
+    res.setResult("B","黄色B");
+    end
+
+rule "黄C"
+when
+    Policy(sex == "女", age >= 18, age <= 30, userMarry)
+    then
+    res.setResult("C","黄色C");
+    end
+
+rule "黄D"
+when
+    Policy(sex == "女", age >= 18, age <= 30, !userMarry)
+    then
+    res.setResult("D","黄色D");
+    end
+
+rule "黄E"
+when
+    Policy(sex == "女", age > 30, userParenting)
+    then
+    res.setResult("E","黄色E");
+    end
+
+rule "黄F"
+when
+    Policy(sex == "女", age > 30, !userParenting)
+    then
+    res.setResult("F","黄色F");
+    end  

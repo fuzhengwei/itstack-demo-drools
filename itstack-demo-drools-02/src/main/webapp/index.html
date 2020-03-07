@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>基于GOJS封装的流程图设计（展示）工具类</title>
+<meta name="description" content="" />
+<!-- Copyright 1998-2016 by Northwoods Software Corporation. -->
+<meta charset="UTF-8">
+
+	<script language="javascript" src="js/jquery/1.9.1/jquery.min.js"></script>
+	<script language="javascript" src="js/layer/layer.js"></script>
+	<script language="javascript" src="go.js"></script>
+	<script language="javascript" src="js/flow-desinger.js"></script>
+	<script language="javascript" src="js/flow-display.js"></script>
+
+</head>
+<body>
+<div id="sample" style="width:80%;margin: 0 auto">
+  <div style="width:100%; white-space:nowrap;">
+    <!--  控件 -->
+    <span style="display: inline-block; vertical-align: top; padding: 5px; width:110px">
+      <div id="myPaletteDiv" style="border: solid 1px black; height: 750px"></div>
+    </span>
+
+    <!--  设计面板 -->
+    <span style="display: inline-block; vertical-align: top; padding: 5px; width:80%">
+      <div id="myFlowDesignerDiv" style="border: solid 1px black; height: 750px"></div>
+    </span>
+  </div>
+
+  <div>
+    <div>
+      <button id="btnCreate" onClick="doCreateStep()">新建步骤</button>
+      <button id="btnSave" onClick="saveDesigner()">保存设计图</button>
+    </div>
+    <textarea id="mySavedModel" style="width:100%;height:300px">
+{ "class": "go.GraphLinksModel",
+  "modelData": {"position":"-5 1.5639703440111745"},
+  "nodeDataArray": [
+{"key":"24a4899d-5ffc-41a2-aade-1af9cc747fd3", "text":"性别", "figure":"Circle", "fill":"#4fba4f", "stepType":1, "loc":"600 100"},
+{"key":"4cb8ef7e-09bb-438b-bebc-5a78543e85be", "text":"年龄", "figure":"Circle", "fill":"#4fba4f", "stepType":1, "loc":"300 270"},
+{"key":"15648e61-a88c-4257-86a2-f40b9ac98ce8", "text":"单身", "figure":"Circle", "fill":"#4fba4f", "stepType":1, "loc":"100 480"},
+{"key":"0cab76fd-d09d-453f-9ffb-d2b93dd5a40c", "text":"结婚", "figure":"Circle", "fill":"#4fba4f", "stepType":1, "loc":"300 480"},
+{"key":"7ac8552f-a80a-41de-ba0e-6680f0d84876", "text":"育儿", "figure":"Circle", "fill":"#4fba4f", "stepType":1, "loc":"500 480"},
+{"key":"d10d88a2-19f0-4148-ad77-5c9c9e4ccfe4", "text":"A", "figure":"Circle", "fill":"#CE0620", "stepType":4, "loc":"50 590"},
+{"key":"f0d3a169-2ea6-490b-a78b-eba5040ef959", "text":"B", "figure":"Circle", "fill":"#CE0620", "stepType":4, "loc":"150 590"},
+{"key":"3f437028-55d9-4d42-8945-2c1cd8494fe1", "text":"C", "figure":"Circle", "fill":"#CE0620", "stepType":4, "loc":"250 590"},
+{"key":"c9f8e4f4-1fa5-4281-970f-67e539cbdac0", "text":"D", "figure":"Circle", "fill":"#CE0620", "stepType":4, "loc":"350 590"},
+{"key":"35e9ea07-cdb0-43b2-be1e-955d08996deb", "text":"E", "figure":"Circle", "fill":"#CE0620", "stepType":4, "loc":"450 590"},
+{"key":"527c7fcb-a688-41f5-a888-fd4e17556b10", "text":"F", "figure":"Circle", "fill":"#CE0620", "stepType":4, "loc":"550 590"},
+{"key":"7ac8552f-a80a-41de-ba0e-6680f0d848762", "text":"育儿", "figure":"Circle", "fill":"#4fba4f", "stepType":1, "loc":"1100 480"},
+{"key":"0cab76fd-d09d-453f-9ffb-d2b93dd5a40c2", "text":"结婚", "figure":"Circle", "fill":"#4fba4f", "stepType":1, "loc":"900 480"},
+{"key":"15648e61-a88c-4257-86a2-f40b9ac98ce82", "text":"单身", "figure":"Circle", "fill":"#4fba4f", "stepType":1, "loc":"700 480"},
+{"key":"4cb8ef7e-09bb-438b-bebc-5a78543e85be2", "text":"年龄", "figure":"Circle", "fill":"#4fba4f", "stepType":1, "loc":"900 270"},
+{"key":"cc2aad2d-0556-49a7-83d1-2bdda9621afc", "text":"A", "figure":"Circle", "fill":"#ceb500", "stepType":4, "loc":"650 590"},
+{"key":"b5be663e-49f2-42c2-818d-6f85c7a9b63d", "text":"B", "figure":"Circle", "fill":"#ceb500", "stepType":4, "loc":"740 590"},
+{"key":"32e5bcac-58a3-4b2e-8b22-85e0bfe39744", "text":"C", "figure":"Circle", "fill":"#ceb500", "stepType":4, "loc":"850 590"},
+{"key":"a01f746e-1f56-4623-879e-2c8e7e8f892f", "text":"D", "figure":"Circle", "fill":"#ceb500", "stepType":4, "loc":"950 590"},
+{"key":"5372faf8-7721-4e9f-9d6a-c535c23d13f7", "text":"E", "figure":"Circle", "fill":"#ceb500", "stepType":4, "loc":"1050 590"},
+{"key":"14732023-2eae-49d6-a4e7-f36a0b431c58", "text":"F", "figure":"Circle", "fill":"#ceb500", "stepType":4, "loc":"1140 590"}
+ ],
+  "linkDataArray": [
+{"from":"24a4899d-5ffc-41a2-aade-1af9cc747fd3", "to":"4cb8ef7e-09bb-438b-bebc-5a78543e85be", "text":"男", "pFill":{"class":"go.Brush", "type":"Radial", "start":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "end":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "colorStops":{"0":"rgb(240, 240, 240)", "1":"rgba(240, 240, 240, 0)", "0.3":"rgb(240, 240, 240)"}}},
+{"from":"4cb8ef7e-09bb-438b-bebc-5a78543e85be", "to":"15648e61-a88c-4257-86a2-f40b9ac98ce8", "text":"＜18", "pFill":{"class":"go.Brush", "type":"Radial", "start":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "end":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "colorStops":{"0":"rgb(240, 240, 240)", "1":"rgba(240, 240, 240, 0)", "0.3":"rgb(240, 240, 240)"}}},
+{"from":"4cb8ef7e-09bb-438b-bebc-5a78543e85be", "to":"0cab76fd-d09d-453f-9ffb-d2b93dd5a40c", "text":"18-30", "pFill":{"class":"go.Brush", "type":"Radial", "start":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "end":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "colorStops":{"0":"rgb(240, 240, 240)", "1":"rgba(240, 240, 240, 0)", "0.3":"rgb(240, 240, 240)"}}},
+{"from":"15648e61-a88c-4257-86a2-f40b9ac98ce8", "to":"d10d88a2-19f0-4148-ad77-5c9c9e4ccfe4", "text":"是", "pFill":{"class":"go.Brush", "type":"Radial", "start":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "end":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "colorStops":{"0":"rgb(240, 240, 240)", "1":"rgba(240, 240, 240, 0)", "0.3":"rgb(240, 240, 240)"}}},
+{"from":"15648e61-a88c-4257-86a2-f40b9ac98ce8", "to":"f0d3a169-2ea6-490b-a78b-eba5040ef959", "text":"否", "pFill":{"class":"go.Brush", "type":"Radial", "start":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "end":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "colorStops":{"0":"rgb(240, 240, 240)", "1":"rgba(240, 240, 240, 0)", "0.3":"rgb(240, 240, 240)"}}},
+{"from":"0cab76fd-d09d-453f-9ffb-d2b93dd5a40c", "to":"3f437028-55d9-4d42-8945-2c1cd8494fe1", "text":"是", "pFill":{"class":"go.Brush", "type":"Radial", "start":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "end":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "colorStops":{"0":"rgb(240, 240, 240)", "1":"rgba(240, 240, 240, 0)", "0.3":"rgb(240, 240, 240)"}}},
+{"from":"0cab76fd-d09d-453f-9ffb-d2b93dd5a40c", "to":"c9f8e4f4-1fa5-4281-970f-67e539cbdac0", "text":"否", "pFill":{"class":"go.Brush", "type":"Radial", "start":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "end":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "colorStops":{"0":"rgb(240, 240, 240)", "1":"rgba(240, 240, 240, 0)", "0.3":"rgb(240, 240, 240)"}}},
+{"from":"4cb8ef7e-09bb-438b-bebc-5a78543e85be", "to":"7ac8552f-a80a-41de-ba0e-6680f0d84876", "text":">30", "pFill":{"class":"go.Brush", "type":"Radial", "start":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "end":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "colorStops":{"0":"rgb(240, 240, 240)", "1":"rgba(240, 240, 240, 0)", "0.3":"rgb(240, 240, 240)"}}},
+{"from":"7ac8552f-a80a-41de-ba0e-6680f0d84876", "to":"35e9ea07-cdb0-43b2-be1e-955d08996deb", "text":"是", "pFill":{"class":"go.Brush", "type":"Radial", "start":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "end":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "colorStops":{"0":"rgb(240, 240, 240)", "1":"rgba(240, 240, 240, 0)", "0.3":"rgb(240, 240, 240)"}}},
+{"from":"7ac8552f-a80a-41de-ba0e-6680f0d84876", "to":"527c7fcb-a688-41f5-a888-fd4e17556b10", "text":"否", "pFill":{"class":"go.Brush", "type":"Radial", "start":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "end":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "colorStops":{"0":"rgb(240, 240, 240)", "1":"rgba(240, 240, 240, 0)", "0.3":"rgb(240, 240, 240)"}}},
+{"from":"4cb8ef7e-09bb-438b-bebc-5a78543e85be2", "to":"7ac8552f-a80a-41de-ba0e-6680f0d848762", "text":">30", "pFill":{"class":"go.Brush", "type":"Radial", "start":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "end":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "colorStops":{"0":"rgb(240, 240, 240)", "1":"rgba(240, 240, 240, 0)", "0.3":"rgb(240, 240, 240)"}}},
+{"from":"4cb8ef7e-09bb-438b-bebc-5a78543e85be2", "to":"0cab76fd-d09d-453f-9ffb-d2b93dd5a40c2", "text":"18-30", "pFill":{"class":"go.Brush", "type":"Radial", "start":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "end":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "colorStops":{"0":"rgb(240, 240, 240)", "1":"rgba(240, 240, 240, 0)", "0.3":"rgb(240, 240, 240)"}}},
+{"from":"4cb8ef7e-09bb-438b-bebc-5a78543e85be2", "to":"15648e61-a88c-4257-86a2-f40b9ac98ce82", "text":"＜18", "pFill":{"class":"go.Brush", "type":"Radial", "start":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "end":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "colorStops":{"0":"rgb(240, 240, 240)", "1":"rgba(240, 240, 240, 0)", "0.3":"rgb(240, 240, 240)"}}},
+{"from":"24a4899d-5ffc-41a2-aade-1af9cc747fd3", "to":"4cb8ef7e-09bb-438b-bebc-5a78543e85be2", "text":"女", "pFill":{"class":"go.Brush", "type":"Radial", "start":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "end":{"class":"go.Spot", "x":0.5, "y":0.5, "offsetX":0, "offsetY":0}, "colorStops":{"0":"rgb(240, 240, 240)", "1":"rgba(240, 240, 240, 0)", "0.3":"rgb(240, 240, 240)"}}},
+{"from":"15648e61-a88c-4257-86a2-f40b9ac98ce82", "to":"cc2aad2d-0556-49a7-83d1-2bdda9621afc", "text":"是"},
+{"from":"15648e61-a88c-4257-86a2-f40b9ac98ce82", "to":"b5be663e-49f2-42c2-818d-6f85c7a9b63d", "text":"否"},
+{"from":"0cab76fd-d09d-453f-9ffb-d2b93dd5a40c2", "to":"32e5bcac-58a3-4b2e-8b22-85e0bfe39744", "text":"是"},
+{"from":"0cab76fd-d09d-453f-9ffb-d2b93dd5a40c2", "to":"a01f746e-1f56-4623-879e-2c8e7e8f892f", "text":"否"},
+{"from":"7ac8552f-a80a-41de-ba0e-6680f0d848762", "to":"5372faf8-7721-4e9f-9d6a-c535c23d13f7", "text":"是"},
+{"from":"7ac8552f-a80a-41de-ba0e-6680f0d848762", "to":"14732023-2eae-49d6-a4e7-f36a0b431c58", "text":"否"}
+ ]}
+    </textarea>
+  </div>
+
+</div>
+</body>
+<script type="text/javascript">
+    var areaFlow = document.getElementById('mySavedModel');
+
+    // 流程图设计器
+    var  myDesigner= new FlowDesigner('myFlowDesignerDiv');
+    myDesigner.initToolbar('myPaletteDiv');// 初始化控件面板
+    myDesigner.displayFlow(areaFlow.value);// 在设计面板中显示流程图
+
+    /**
+     * 创建步骤
+     */
+    var doCreateStep = function () {
+        if(!myDesigner) return;
+
+        myDesigner.createStep();
+    };
+
+    /**
+     * 保存设计图中的数据
+     */
+    var saveDesigner = function(){
+      areaFlow.value = myDesigner.getFlowData();
+    };
+
+</script>
+</html>
